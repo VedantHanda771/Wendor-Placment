@@ -9,39 +9,49 @@ interface Product {
     image?: string;
 }
 
+interface CheckoutState {
+    cart: Record<string, number>;
+    products: Product[];
+}
+
 const Checkout: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { cart, products } = location.state || { cart: {}, products: [] };
+
+    // ✅ Explicitly cast location.state to your custom type
+    const { cart, products } = (location.state as CheckoutState) || {
+        cart: {},
+        products: [],
+    };
 
     const [loading, setLoading] = useState(true);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
     const [vendReady, setVendReady] = useState(false);
     const [isVending, setIsVending] = useState(false);
 
-    // Simulate fake payment process
+    // 🧠 Fake payment simulation
     useEffect(() => {
         setLoading(true);
         const timer = setTimeout(() => {
             setLoading(false);
             setPaymentSuccess(true);
 
-            // Show Vend button after a delay
+            // Show vend button after a short delay
             setTimeout(() => setVendReady(true), 1500);
         }, 2500);
 
         return () => clearTimeout(timer);
     }, []);
 
-    const totalPrice = Object.entries(cart || {}).reduce((sum, [id, qty]) => {
-        const p = (products as Product[]).find((x) => x.product_id === id);
-        return p ? sum + p.product_price * (qty as number) : sum;
+    // ✅ Type-safe reduce
+    const totalPrice = Object.entries(cart || {}).reduce<number>((sum, [id, qty]) => {
+        const product = products.find((p) => p.product_id === id);
+        return product ? sum + product.product_price * qty : sum;
     }, 0);
 
     const handleVend = () => {
         setIsVending(true);
         setVendReady(false);
-        // Fake vending delay
         setTimeout(() => {
             setIsVending(false);
             alert("✅ Items vended successfully!");
@@ -51,7 +61,7 @@ const Checkout: React.FC = () => {
 
     return (
         <div className="checkout-container">
-            {/* Fake loader */}
+            {/* Loader section */}
             {loading && (
                 <div className="loader-section">
                     <div className="loader" />
@@ -59,18 +69,17 @@ const Checkout: React.FC = () => {
                 </div>
             )}
 
-            {/* Payment success screen */}
+            {/* Payment success view */}
             {!loading && paymentSuccess && (
                 <div className="success-screen">
                     <h2 className="success-title">✅ Payment Successful</h2>
                     <p className="sub-text">Your order is being prepared for vending.</p>
 
                     <div className="product-list">
-                        {Object.entries(cart).map(([id, qty]) => {
-                            const product = (products as Product[]).find(
-                                (p) => p.product_id === id
-                            );
+                        {Object.entries(cart).map(([id, qty]): React.ReactNode => {
+                            const product = products.find((p) => p.product_id === id);
                             if (!product) return null;
+
                             return (
                                 <div key={id} className="product-row">
                                     <div className="product-info">
@@ -78,7 +87,7 @@ const Checkout: React.FC = () => {
                                         <span> × {qty}</span>
                                     </div>
                                     <div className="price">
-                                        ₹{product.product_price * (qty as number)}
+                                        ₹{product.product_price * qty}
                                     </div>
                                 </div>
                             );
@@ -90,7 +99,7 @@ const Checkout: React.FC = () => {
                     {/* Vend button */}
                     {vendReady && (
                         <button className="vend-btn" onClick={handleVend}>
-                            🚀 vend Now
+                            🚀 Vend Now
                         </button>
                     )}
 
@@ -98,7 +107,7 @@ const Checkout: React.FC = () => {
                     {isVending && (
                         <div className="vending-section">
                             <div className="vending-loader" />
-                            <p>vending your items...</p>
+                            <p>Vending your items...</p>
                         </div>
                     )}
 
