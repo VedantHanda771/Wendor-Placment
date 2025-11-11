@@ -1,0 +1,40 @@
+.idle-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, #111 60%, #000);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.5s ease;
+    cursor: pointer;
+}
+
+.idle-content {
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+}
+
+.idle-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.idle-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff4d00;
+    letter-spacing: 1px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}

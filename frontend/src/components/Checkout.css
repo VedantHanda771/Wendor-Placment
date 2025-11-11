@@ -1,0 +1,127 @@
+.checkout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #fafafa;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+}
+
+.loader-section,
+.vending-section {
+    text-align: center;
+    color: #333;
+}
+
+.loader {
+    border: 6px solid #eee;
+    border-top: 6px solid #ff4d00;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.success-screen {
+    text-align: center;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 420px;
+    animation: fadeIn 0.4s ease;
+}
+
+.success-title {
+    color: #2d8f2d;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.sub-text {
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.product-list {
+    text-align: left;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.product-row {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+
+}
+
+.total {
+    margin-top: 10px;
+    font-weight: bold;
+}
+.button{
+    gap: 1rem;
+}
+.product-info{
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vend-btn {
+    margin-top: 20px;
+    background: #ff4d00;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.vend-btn:hover {
+    background: #e34400;
+}
+
+.vending-loader {
+    border: 6px solid #eee;
+    border-top: 6px solid #2d8f2d;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+.back-btn {
+    margin-top: 16px;
+    background: #ddd;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
